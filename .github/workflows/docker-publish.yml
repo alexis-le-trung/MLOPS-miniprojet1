@@ -31,7 +31,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: "${{ secrets.SSH_PASSWORD}}"
           script: |
             if [ "$(docker ps -a -q -f name=miniprojet1)" ]; then
                 echo "Stopping existing container..."
