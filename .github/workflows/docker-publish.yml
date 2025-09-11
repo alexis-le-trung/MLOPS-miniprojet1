@@ -26,3 +26,19 @@ jobs:
       - name: Push Docker image
         run: |
           docker push alexisletrung/miniprojet1:latest
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            if [ "$(docker ps -a -q -f name=miniprojet1)" ]; then
+                echo "Stopping existing container..."
+                docker stop miniprojet1
+                docker rm miniprojet1
+            else
+                echo "No existing container, continuing..."
+            fi
+            docker pull ${{ secrets.DOCKER_USERNAME }}/miniprojet1:latest
+            docker run -d --name miniprojet1 -p 8072:8000 ${{ secrets.DOCKER_USERNAME }}/miniprojet1:latest
