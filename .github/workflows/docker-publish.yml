@@ -27,11 +27,11 @@ jobs:
         run: |
           docker push alexisletrung/miniprojet1:latest
       - name: Deploy to VM
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PASSWORD }}
+          password: ${{ secrets.SSH_PASSWORD }}
           script: |
             if [ "$(docker ps -a -q -f name=miniprojet1)" ]; then
                 echo "Stopping existing container..."
