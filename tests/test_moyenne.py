@@ -13,3 +13,6 @@ def test_moyenne_valeurs_flottantes():
 
 def test_moyenne_un_element():
     assert compute_average([10]) == 10
+
+def test_false():
+    assert compute_average([1, 2, 3]) == 4
